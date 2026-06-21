@@ -1,0 +1,60 @@
+class KeybindManager
+{
+private:
+    std::map<std::string, int> bindings;
+
+public:
+    void Register(
+        const std::string& module,
+        int defaultKey)
+    {
+        bindings[module] = defaultKey;
+
+        Logger::Info(
+            "[Keybinds] Registered " +
+            module
+        );
+    }
+
+    void UpdateBind(
+        const std::string& module,
+        int newKey)
+    {
+        bindings[module] = newKey;
+
+        Logger::Info(
+            "[Keybinds] Updated " +
+            module +
+            " -> " +
+            std::to_string(newKey)
+        );
+    }
+
+    int GetBind(
+        const std::string& module)
+    {
+        return bindings[module];
+    }
+
+    void SaveProfile()
+    {
+        Logger::Info(
+            "[Keybinds] Profile saved"
+        );
+    }
+};
+
+if (ImGui::Button("Change Key"))
+{
+    KeyCapture::BeginListening(
+        "PhantomFlight"
+    );
+}
+
+if (KeyCapture::HasInput())
+{
+    keybinds.UpdateBind(
+        "PhantomFlight",
+        KeyCapture::GetPressedKey()
+    );
+}
