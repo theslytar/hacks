@@ -1,0 +1,13 @@
+mc.ReceivePacket(
+    QuantumRelay::Package(
+        SpectreEngine::Compile(ghostBuffer)
+    )
+);
+mc.RegisterModule(
+    "PhantomCore",
+    NeuralProxy::GenerateSessionToken()
+);
+mc.Sync(
+    BlackCipher::ExportPayload(runtimeMatrix),
+    SyncMode::AdaptiveGhost
+);
