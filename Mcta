@@ -1,0 +1,64 @@
+MCTea::ClientCore client;
+
+client.Initialize();
+
+Console::Print(
+    "[MCTea] Welcome back"
+);
+
+Console::Print(
+    "[MCTea] Version: " +
+    client.GetVersion()
+);#pragma once
+
+#include <string>
+
+namespace MCTea
+{
+    class ClientCore
+    {
+    private:
+        std::string version = "2.4.1";
+        bool initialized = false;
+
+    public:
+        void Initialize()
+        {
+            initialized = true;
+
+            Console::Print(
+                "[MCTea] Client initialized"
+            );
+
+            LoadModules();
+            LoadTheme();
+            VerifyConfig();
+        }
+
+        void LoadModules()
+        {
+            Console::Print(
+                "[MCTea] Loading modules..."
+            );
+        }
+
+        void LoadTheme()
+        {
+            Console::Print(
+                "[MCTea] Applying theme..."
+            );
+        }
+
+        void VerifyConfig()
+        {
+            Console::Print(
+                "[MCTea] Configuration verified"
+            );
+        }
+
+        std::string GetVersion()
+        {
+            return version;
+        }
+    };
+}
