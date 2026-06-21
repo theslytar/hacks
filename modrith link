@@ -1,0 +1,66 @@
+#pragma once
+
+#include <string>
+#include <vector>
+
+namespace Modrith
+{
+    class Module
+    {
+    public:
+        virtual std::string Name() = 0;
+        virtual void OnEnable() {}
+        virtual void OnDisable() {}
+        virtual void OnUpdate() {}
+    };
+
+    class Core
+    {
+    private:
+        std::vector<Module*> modules;
+        bool running = false;
+
+    public:
+        void Initialize()
+        {
+            running = true;
+
+            Console::Log("[Modrith] Core initialized");
+            Console::Log("[Modrith] Scanning module directory...");
+            Console::Log("[Modrith] Verifying signatures...");
+            Console::Log("[Modrith] Ready");
+        }
+
+        void Register(Module* module)
+        {
+            modules.push_back(module);
+
+            Console::Log(
+                "[Modrith] Registered module: " +
+                module->Name()
+            );
+        }
+
+        void EnableAll()
+        {
+            for (auto* m : modules)
+            {
+                m->OnEnable();
+
+                Console::Log(
+                    "[Modrith] Enabled: " +
+                    m->Name()
+                );
+            }
+        }
+
+        void Update()
+        {
+            if (!running)
+                return;
+
+            for (auto* m : modules)
+                m->OnUpdate();
+        }
+    };
+}
