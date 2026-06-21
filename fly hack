@@ -1,0 +1,60 @@
+#pragma once
+
+#include "SpectreEngine.hpp"
+#include "GhostController.hpp"
+
+class PhantomFlight
+{
+private:
+    bool enabled = false;
+    float hoverFactor = 0.0f;
+    float driftCompensation = 1.0f;
+
+public:
+    void Enable()
+    {
+        enabled = true;
+
+        ShadowConsole::Log(
+            "[PhantomFlight] Aerial mode initialized"
+        );
+
+        hoverFactor = 0.85f;
+    }
+
+    void Disable()
+    {
+        enabled = false;
+
+        ShadowConsole::Log(
+            "[PhantomFlight] Aerial mode terminated"
+        );
+    }
+
+    void Update()
+    {
+        if (!enabled)
+            return;
+
+        GhostController::ApplyVector(
+            Vector3(
+                0.0f,
+                hoverFactor,
+                0.0f
+            )
+        );
+
+        QuantumStabilizer::CorrectDrift(
+            driftCompensation
+        );
+
+        SpectreEngine::PushState(
+            "FLIGHT_MATRIX_ACTIVE"
+        );
+    }
+
+    const char* Name()
+    {
+        return "PhantomFlight";
+    }
+};
